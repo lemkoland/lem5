@@ -95,13 +95,10 @@ export default {
   },
   mounted() {
     const tl = new TimelineLite();
-    const posts = document.querySelectorAll(".post")
-    tl.from('.inin', 2, {delay: .6, clipPath: 'polygon(0 50%, 100% 50%, 100% 50%, 0 50%)', easing: 'elastic' })
-    .to('.inin', 1, { clipPath: 'polygon(0 50%, 100% 50%, 100% 50%, 0 50%)', easing: 'elastic'})
-    .to('.in', 1, { clipPath: 'polygon(0 50%, 100% 50%, 100% 50%, 0 50%)', easing: 'easeOutQuint'}, '-=.5')
-    .from('.tyt', 1, { opacity: 0})
-    .from('.header', 1, { clipPath: 'polygon(0 50%, 100% 50%, 100% 50%, 0 50%)', easing: 'easeOutQuint'},'-=3.5')
-    .to(posts, .7, {opacity: 1, clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', easing: 'easeOutQuint', stagger: 0.4}, '-=.7');
+        const posts = document.querySelectorAll(".post");
+        tl.to('.in', .7, { clipPath: 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)', easing: 'easeOutQuint'}, '-=.5')
+        .to('.header', .7, { clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', easing: 'easeOutQuint'})
+        .to(posts, .7, {opacity: 1, clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', easing: 'easeOutQuint', stagger: 0.4}, '-=.4');
 
 
     var sections = gsap.utils.toArray('.trigerPost');
@@ -122,7 +119,7 @@ export default {
         scrollTrigger: {
           start: "bottom center",
         	trigger: section,
-          scrub: true
+          toggleActions: "restart none restart none"
         }
     });
   //   gsap.to('.post img', .3, { clipPath: 'circle(150% at 100% 100%)',
@@ -158,6 +155,10 @@ export default {
   margin:0;
   padding: 0;
   border:0;
+}
+.header, .post {
+  clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%);
+  z-index: 7;
 }
 
 
