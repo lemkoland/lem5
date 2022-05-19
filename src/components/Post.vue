@@ -1,6 +1,6 @@
 <template>
 
-  <div class="post"  @mouseenter="kolor" >
+  <div class="post"   @mouseenter="kolor"  >
 
     <g-link :to="post.path">
       <div class="trigerPost" ></div>
@@ -168,7 +168,8 @@ export default {
   }
   @media screen and (orientation:landscape) {
     .trigerPost {
-      display: none;
+      display: none !important;
+
     }
     .post img {
       clip-path: circle(75% at 100% 100%);
