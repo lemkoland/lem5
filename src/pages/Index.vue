@@ -163,7 +163,10 @@ var bb8 = color[b8];
 
     const tl = new TimelineLite();
         const posts = document.querySelectorAll(".post");
+        const powitania = document.querySelectorAll(".powitanie");
+
         gsap.from('.chow1', 3.2, {opacity: 0})
+
     tl.to('.inin', .6, { clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', easing: 'elastic'})
     .to('.in', .3, { backgroundColor: bb1})
     .to('.in', .3, { backgroundColor: bb2})
@@ -173,8 +176,9 @@ var bb8 = color[b8];
     .to('.in', .3, { backgroundColor: bb6})
     .to('.in', .3, { backgroundColor: bb7})
     .to('.in', .3, { backgroundColor: bb8})
-    .to('.in', .6, {delay: .6,  clipPath: 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)', easing: 'easeOutQuint'}, '-=.5')
-    .to('.header', 1.5, { clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', easing: 'easeOutQuint'})
+    .to('.in', .7, {clipPath: 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)', easing: 'easeOutQuint'},)
+    .to('.header', 1, { clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', easing: 'easeOutQuint'})
+    .to(powitania, .7, {opacity: 1, clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', easing: 'easeOutQuint', stagger: 0.4}, '-=.7')
     .to(posts, .7, {opacity: 1, clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', easing: 'easeOutQuint', stagger: 0.4}, '-=.7');
 
 
@@ -231,7 +235,7 @@ var bb8 = color[b8];
     z-index: 122;
   }
 
-  .header, .post {
+  .header, .post, .powitanie {
     clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%);
     z-index: 7;
   }
@@ -274,6 +278,11 @@ var bb8 = color[b8];
      .tag-list2 {
        max-width: 90vw;
      }
+     img.chow1 {
+       object-fit: contain!important;
+
+     }
+
     }
    @media screen and (orientation:landscape) {
      .powitanie {
