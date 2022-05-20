@@ -15,7 +15,7 @@
 query WordPressPostTag ($id: ID!, $page: Int) {
   wordPressPostTag(id: $id) {
     title
-    belongsTo(page: $page, perPage: 100) @paginate {
+    belongsTo(page: $page, perPage: 100) {
       pageInfo {
         totalPages
         currentPage
@@ -119,7 +119,7 @@ export default {
         scrollTrigger: {
           start: "bottom center",
         	trigger: section,
-          toggleActions: "restart none restart none"
+          scrub: true
         }
     });
   //   gsap.to('.post img', .3, { clipPath: 'circle(150% at 100% 100%)',
