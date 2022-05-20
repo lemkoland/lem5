@@ -14,7 +14,7 @@
 query WordPressCategory ($id: ID!, $page: Int) {
   wordPressCategory(id: $id) {
     title
-    belongsTo(page: $page, perPage: 10) @paginate {
+    belongsTo(page: $page, perPage: 100) {
       pageInfo {
         totalPages
         currentPage
@@ -118,7 +118,7 @@ export default {
         scrollTrigger: {
           start: "bottom center",
         	trigger: section,
-          toggleActions: "restart none restart none"
+          scrub: true
         }
     });
 
