@@ -138,9 +138,12 @@ export default {
   mounted() {
     const tl = new TimelineLite();
         const posts = document.querySelectorAll(".post");
+        const powitania = document.querySelectorAll(".powitanie");
+
         tl.to('.in', 1, {delay: 1.0,  clipPath: 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)', easing: 'easeOutQuint'}, '-=.5')
         .to('.header', 1.5, { clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', easing: 'easeOutQuint'})
-        .to(posts, 0.7, {opacity: 1, clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', easing: 'easeOutQuint', stagger: 0.4}, '-=.7')
+        .to(powitania, .7, {opacity: 1, clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', easing: 'easeOutQuint', stagger: 0.4}, '-=.7')
+                .to(posts, 0.7, {opacity: 1, clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', easing: 'easeOutQuint', stagger: 0.4}, '-=.7')
         .to(window, {duration: 2, scrollTo:"#h2Tagi"}, '-=1.4');
 
     var color = ['#5d237a', '#d17fb4', '#505ce5', '#62e564', '#6121EB', '#8B00A1', '#834D9B',
@@ -218,7 +221,8 @@ export default {
     z-index: 122;
   }
 
-  .header, .post {
+
+  .header, .post, .powitanie {
     clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%);
     z-index: 7;
   }
