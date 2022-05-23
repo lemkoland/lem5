@@ -1,7 +1,8 @@
 <template>
   <div class="layout">
     <div class="wzorki"></div>
-    <g-image class="menu-icon" v-if="menu" alt="menu" src="~/assets/menu.png"  @click="pokaMenu" />
+    <!-- <g-image class="menu-icon" v-if="menu" alt="menu" src="~/assets/menu.png"  @click="pokaMenu" /> -->
+    <g-link to="/menu/"><g-image class="menu-icon" alt="menu" src="~/assets/menu.png" /></g-link>
 
     <header class="header">
       <div class="logosy">
@@ -159,6 +160,7 @@ nav[role="navigation"] a {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
+  clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%);
 }
 .nav__link {
   margin-left: 20px;
@@ -257,9 +259,15 @@ iframe {
 }
 .nav li a {
   color: #000;
+
 }
 .navLinki li {
   font-family: 'breamcatcher-regular', sans-serif;
+  list-style: none;
+}
+.navLinki li a {
+  text-decoration: none;
+
 }
 
 
@@ -309,8 +317,11 @@ iframe {
     max-width: 50%;
   }
   .navLinki li {
-    font-size: 2.4em;
-    margin: 1vh 0;
+    font-size: 3.4em;
+    margin: .3em 0;
+    height: 1em;
+
+
   }
 
  }
@@ -357,7 +368,9 @@ iframe {
    }
    .navLinki li {
      font-size: 2.8vh ;
-     margin: 1vh 0;
+     margin: .6em 0;
+     padding-left: 1em;
+     height: 1em;;
    }
 
   }
