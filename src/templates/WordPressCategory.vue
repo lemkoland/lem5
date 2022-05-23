@@ -1,5 +1,10 @@
 <template>
   <Layout>
+    <div class="in">
+      <div class="inin">
+
+      </div>
+    </div>
     <h1>{{ $page.wordPressCategory.title }} </h1>
     <ul class="post-list">
       <li v-for="{ node } in $page.wordPressCategory.belongsTo.edges" :key="node.id">
@@ -96,9 +101,19 @@ export default {
 
     const tl = new TimelineLite();
         const posts = document.querySelectorAll(".post");
-        tl.to('.in', .7, { clipPath: 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)', easing: 'easeOutQuint'}, '-=.5')
-        .to('.header', .7, { clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', easing: 'easeOutQuint'})
+        tl.to('.in', 1, {delay: 1.0,  clipPath: 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)', easing: 'easeOutQuint'}, '-=.5')
+        .to('.header', 1.5, { clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', easing: 'easeOutQuint'})
         .to(posts, .7, {opacity: 1, clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', easing: 'easeOutQuint', stagger: 0.4}, '-=.4');
+
+        var color = ['#5d237a', '#d17fb4', '#505ce5', '#62e564', '#6121EB', '#8B00A1', '#834D9B',
+        '#D04ED6', '#1CD8D2', '#93EDC7', '#EBB752', '#E16BEB', '#B5CCFF', '#1A3091', '#7594C9',
+      '#784C39', '#B07156', '#AE605F', '#AB4E68', '#7F4357', '#533745', '#A8948A', '#3B302B',
+    '#9D9171', '#554B30', '#9E8234', '#998C69', '#4E4838', '#845440', '#845440', '#DB4F4F',
+    '#4B1A1A', '#473527', '#552600','#A87E5D' ];
+    
+            var c2 = Math.floor(Math.random() * color.length);
+            var cca2 = color[c2];
+            gsap.to('.in', .7, { backgroundColor: cca2});
 
     var sections = gsap.utils.toArray('.trigerPost');
 
