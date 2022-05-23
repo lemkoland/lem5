@@ -157,6 +157,10 @@ export default {
     var cca = color[c1];
     gsap.to('body', .7, { backgroundColor: cca});
 
+    var c2 = Math.floor(Math.random() * color.length);
+    var cca2 = color[c2];
+    gsap.to('.in', .7, { backgroundColor: cca2});
+
     const boxAnimation4 = gsap.to('body', .7, { backgroundColor: cca});
 
     ScrollTrigger.create({
