@@ -26,6 +26,7 @@
           <li></li>
           <li @click="niePokaMenu"><g-link to="/kontakt/">Контакт / Kontakt</g-link></li>
           <li></li>
+          <li @click="niePokaMenu"lo><g-link to="/audio-player/">lemkoland na dobranicz </g-link></li>
           <li @click="niePokaMenu"lo><g-link to="https://www.facebook.com/Lemkoland/">FB</g-link></li>
           <li @click="niePokaMenu"lo><g-link to="https://www.youtube.com/user/lemkoland">YT</g-link></li>
     </div>
