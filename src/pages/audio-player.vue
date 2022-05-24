@@ -172,12 +172,7 @@
   .sciezka {
     width: 100%;
   }
-  .pleyki {
-    background-color: transparent;
-    width: 100%;
-    height: auto;
-    border: none;
-  }
+
   .pleyki:hover {
           box-shadow: 0 10px 10px rgba(0, 0, 0, 0.4);
   }
@@ -218,6 +213,12 @@
     margin:0;
     font-size: 1.4em;
   }
+  .pleyki {
+    background-color: transparent;
+    width: 40%;
+    height: auto;
+    border: none;
+  }
 }
 
 @media screen and (orientation:portrait) {
@@ -227,6 +228,12 @@
     margin:0;
     font-size: 1.4em;
     overflow: hidden;
+  }
+  .pleyki {
+    background-color: transparent;
+    width: 100%;
+    height: auto;
+    border: none;
   }
 }
 
