@@ -5,6 +5,7 @@
 
       </div>
     </div>
+    <g-link to="/audio-player/"><g-image class="audio-icon" alt="menu" src="~/assets/play.svg" /></g-link>
     <div class="navLinki">
 
 
@@ -180,6 +181,16 @@ export default {
   83% {background: #F44336;}
   100% {background: #F44336;}
 } */
+
+.audio-icon {
+  width: 70px!important;
+  height: 70px!important;
+  margin: 1rem;
+  position: fixed;
+  right: 7rem;
+  top: 1rem;
+  z-index: 23;
+}
 .h2hr {
   text-align: center;
 }
