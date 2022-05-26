@@ -1,240 +1,461 @@
+<template>
+  <Layout>
+    <div class="in">
+      <div class="ininMenu">
 
-  <template>
-    <Layout>
-<div class="page-glass">
-  <h2>{{ title }}</h2>
-  <div class="czasownik">
-
-
-  <p>{{ currentTime }}</p>
-        <input
-        class="sciezka"
-          type="range"
-          min="0"
-          max="100"
-          step="1"
-          v-model="seekValue"
-          @change="onSeek"
-        />
-        <audio
-          :src="this.src"
-          ref="audioPlayer"
-          @timeupdate="onPlaying"
-        >
-          Your browser does not support the
-          <code>audio</code> element.
-        </audio>
-        <p>{{ durationCalak }}</p>
-        </div>
-        <div>
-          <button class="pleyki" v-if="!gra" @click="play"><g-image alt="play" src="~/assets/play.svg"  /></button>
-          <button class="pleyki" v-if="gra" @click="pause"><g-image alt="pause" src="~/assets/pause.svg"  /></button>
-
-        </div>
-
-        <ul class="playLista">
-          <li @click="p1">kohut-i-lyszka</li>
-          <li @click="p2">kwit-paprotyny</li>
-          <li @click="p3">ne-rubaj-jalyczku</li>
-          <li @click="p4">o-smoku</li>
-          <li @click="p5">o-worozci-nezabudci</li>
-          <li @click="p6">snizka</li>
-          <li @click="p7">szczastywyj-pastuch</li>
-        </ul>
       </div>
+    </div>
+    <g-link to="/audio-player/"><g-image class="audio-icon" alt="menu" src="~/assets/play.svg" /></g-link>
+    <div class="navLinki">
 
 
-    </Layout>
-  </template>
+          <li @click="niePokaMenu"><g-link  to="/cat/nowyny/">Новины / Aktualności</g-link></li>
+          <li @click="niePokaMenu"><g-link  to="/o-nas/">О нас / O nas</g-link></li>
+          <li @click="niePokaMenu"><g-link  to="/wspolpraca/">Współpraca</g-link></li>
+          <li @click="niePokaMenu"><g-link  to="/klub-lemkoland/">Клюб Лемколянд / Klub Lemkoland </g-link></li>
+          <li @click="niePokaMenu"><g-link  to="/czasopismo/">Часопис / Czasopismo </g-link></li>
+          <li @click="niePokaMenu"><g-link  to="/cat/sklep/">Склеп / Sklep </g-link></li>
+          <li></li>
+          <li @click="niePokaMenu"><g-link to="/cat/besidujeme-po-naszomu/">Бесідуєме по нашому / Rozmawiamy po naszemu</g-link></li>
+          <li @click="niePokaMenu"><g-link to="/cat/hry-i-zabawy/">Гры і забавы / Gry i zabawy</g-link></li>
+          <li @click="niePokaMenu"><g-link to="/cat/malowanki/">Малюванкы / Malowanki</g-link></li>
+          <li @click="niePokaMenu"><g-link to="/cat/spiwanky-i-opowidania/">Сьпіванкы і оповіданя / Śpiewanki i opowiadania</g-link></li>
+          <li @click="niePokaMenu"><g-link to="/cat/rukotwory/">Рукотворы / Rękodzieło</g-link></li>
+          <li></li>
+          <li @click="niePokaMenu"><g-link to="/cat/dla-rodzicow-i-nauczycieli/">Для родичів і учытелів / Dla rodziców i nauczycieli</g-link></li>
+          <li @click="niePokaMenu"><g-link to="/cat/czytalnia/">Чытальня / Czytelnia</g-link></li>
+          <li></li>
+          <li @click="niePokaMenu"><g-link to="/kontakt/">Контакт / Kontakt</g-link></li>
+          <li></li>
+          <li @click="niePokaMenu"lo><g-link to="/audio-player/">lemkoland na dobranicz </g-link></li>
+          <li @click="niePokaMenu"lo><g-link to="https://www.facebook.com/Lemkoland/">FB</g-link></li>
+          <li @click="niePokaMenu"lo><g-link to="https://www.youtube.com/user/lemkoland">YT</g-link></li>
+    </div>
 
-  <page-query>
-    {
-      allWordPressPostTag {
-        edges {
-          node {
+        </nav>
+
+        <ul class="tag-list2"  id="h2Tagi">
+          <li v-for="edge in $page.allWordPressPostTag.edges" :key="edge.node.id">
+            <g-link :to="edge.node.path">
+              <p>{{edge.node.title}}</p>
+            </g-link>
+          </li>
+        </ul>
+
+  </Layout>
+</template>
+
+<page-query>
+
+  query Home ($page: Int) {
+    allWordPressPost (page: $page, perPage: 3)  {
+      pageInfo {
+        totalPages
+        currentPage
+      }
+      edges {
+        node {
+          id
+          title
+          path
+          excerpt
+          tags {
             title
+            path
             id
-            path
+          }
+          content
+          featuredMedia {
+            sourceUrl
+            altText
+            mediaDetails {
+              width
+            }
           }
         }
       }
-      allWordPressPage {
-        edges {
-          node {
-            title
-            path
-          }
+    }
+
+    allWordPressPage {
+      edges {
+        node {
+          title
+          path
         }
       }
-      allWordPressCategory (sortBy: "name", order: ASC) {
-    edges {
-      node {
-        title
-        id
-        path
-      }
     }
-  }
-    }
-  </page-query>
-
-  <script>
-  export default {
-    name: "App",
-    data() {
-      return {
-        currentTime: '0:00',
-        seekValue: 0,
-        durationCalak: '0:00',
-        title: "kohut i lyszka - lemkoland na dobranicz",
-        gra: false,
-        zrodlo: "../assets/bajka.mp3",
-        src: "https://wp.lemkoland.com/wp-content/uploads/2022/05/kohut-i-lyszka_lemkoland-na-dobranicz.mp3"
-      }
-    },
-    methods: {
-
-      p1() {
-        this.$refs.audioPlayer.pause();
-        this.gra = false;
-        this.src = "https://wp.lemkoland.com/wp-content/uploads/2022/05/kohut-i-lyszka_lemkoland-na-dobranicz.mp3";
-        this.title = "kohut i lyszka";
-      },
-      p2() {
-        this.$refs.audioPlayer.pause();
-        this.gra = false;
-        this.src = "https://wp.lemkoland.com/wp-content/uploads/2022/05/kwit-paprotyny_lemkoland-na-dobranicz.mp3";
-        this.title = "kwit paprotyny";
-      },
-      p3() {
-        this.$refs.audioPlayer.pause();
-        this.gra = false;
-        this.src = "https://wp.lemkoland.com/wp-content/uploads/2022/05/ne-rubaj-jalyczku_lemkoland-na-dobranicz.mp3";
-        this.title = "ne rubaj jalyczku"
-      },
-      p4() {
-        this.$refs.audioPlayer.pause();
-        this.gra = false;
-        this.src = "https://wp.lemkoland.com/wp-content/uploads/2022/05/o-smoku_lemkoland-na-dobranicz.mp3";
-        this.title = "o smoku"
-      },
-      p5() {
-        this.$refs.audioPlayer.pause();
-        this.gra = false;
-        this.src = "https://wp.lemkoland.com/wp-content/uploads/2022/05/o-worozci-nezabudci_lemkoland-na-dobranicz.mp3";
-        this.title = "o worozci nezabudci"
-      },
-      p6() {
-        this.$refs.audioPlayer.pause();
-        this.gra = false;
-        this.src = "https://wp.lemkoland.com/wp-content/uploads/2022/05/snizka_lemkoland-na-dobranicz.mp3";
-        this.title = "snizka"
-      },
-      p7() {
-        this.$refs.audioPlayer.pause();
-        this.gra = false;
-        this.src = "https://wp.lemkoland.com/wp-content/uploads/2022/05/szczastywyj-pastuch_lemkoland-na-dobranicz.mp3";
-        this.title = "szczastywyj pastuch"
-      },
-      play() {
-        this.$refs.audioPlayer.play();
-        this.gra = true;
-        let secondsAll = Math.round(this.$refs.audioPlayer.duration % 60);
-        let secondsAllShow = secondsAll < 10 ? secondsAllShow = "0" + secondsAll : secondsAllShow = secondsAll;
-        let minutesAll = Math.floor(this.$refs.audioPlayer.duration / 60);
-        this.durationCalak = minutesAll + ':' + secondsAllShow;
-      },
-      pause() {
-        this.$refs.audioPlayer.pause();
-        this.gra = false;
-      },
-      onPlaying() {
-        const { audioPlayer } = this.$refs;
-        if (!audioPlayer) {
-          return;
+    allWordPressPostTag (sortBy: "name", order: ASC) {
+      edges {
+        node {
+          title
+          id
+          path
         }
-        let secondsNow = Math.round(audioPlayer.currentTime % 60);
-        let secondsNowShow = secondsNow < 10 ? secondsNowShow = "0" + secondsNow : secondsNowShow = secondsNow;
-        let minutesNow = Math.floor(audioPlayer.currentTime / 60);
-
-        this.currentTime = minutesNow + ':' + secondsNowShow ;
-        this.seekValue = (audioPlayer.currentTime / audioPlayer.duration) * 100;
-      },
-      onSeek() {
-        const { audioPlayer } = this.$refs;
-        const seekto = audioPlayer.duration * (this.seekValue / 100);
-        audioPlayer.currentTime = seekto;
-      },
-    },
-  };
-  </script>
-  <style>
-  .sciezka {
-    width: 100%;
-  }
-
-  .pleyki:hover {
-          box-shadow: 0 10px 10px rgba(0, 0, 0, 0.4);
-  }
-  .page-glass {
-
-  /* From https://css.glass  */
-  background: rgba(255, 255, 255, .03);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(4.5px);
-  -webkit-backdrop-filter: blur(4.5px);
-  border: 1px solid rgba(255, 255, 255, 0.32);
-}
-.czasownik {
-  display: flex;
-}
-.playLista{
-  margin: 0;
-  padding: 0;
-}
-.playLista li {
-  list-style: none;
-  margin: .3em 0;
-  padding: 0;
-  cursor: pointer;
-  font-family: 'breamcatcher-regular', sans-serif;
-  font-size: 1.4em;
-}
-.playLista li:hover {
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.4);
-}
-
-
-
-@media screen and (orientation:landscape) {
-  .page-glass{
-    max-width: 55rem;
-    padding: 2em;
-    margin:0;
-    font-size: 1.4em;
-  }
-  .pleyki {
-    background-color: transparent;
-    width: 40%;
-    height: auto;
-    border: none;
+      }
+    }
+    allWordPressCategory (sortBy: "name", order: ASC) {
+  edges {
+    node {
+      title
+      id
+      path
+    }
   }
 }
-
-@media screen and (orientation:portrait) {
-  .page-glass{
-    width: 94vw;
-    padding: 2vw;
-    margin:0;
-    font-size: 1.4em;
-    overflow: hidden;
   }
-  .pleyki {
-    background-color: transparent;
-    width: 100%;
-    height: auto;
-    border: none;
+
+
+</page-query>
+
+<script>
+import { Pager } from 'gridsome'
+import Post from '~/components/Post.vue'
+import { TimelineLite, TweenMax, gsap } from 'gsap';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin.js';
+gsap.registerPlugin(ScrollToPlugin );
+import { ScrollTrigger } from "gsap/ScrollTrigger.js";
+gsap.registerPlugin(ScrollTrigger);
+
+
+
+
+
+export default {
+  components: {
+    Pager,
+    Post
+  },
+  metaInfo: {
+    title: 'Lemkiwska storinka dla dity'
+  },
+  mounted() {
+    const tl = new TimelineLite();
+
+
+        tl.to('.in', 1, {delay: 1.0,  clipPath: 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)', easing: 'easeOutQuint'}, '-=.5')
+        .to('.header', 1.5, { clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', easing: 'easeOutQuint'});
+
+
+    var color = ['#5d237a', '#d17fb4', '#505ce5', '#62e564', '#6121EB', '#8B00A1', '#834D9B',
+    '#D04ED6', '#1CD8D2', '#93EDC7', '#EBB752', '#E16BEB', '#B5CCFF', '#1A3091', '#7594C9',
+  '#784C39', '#B07156', '#AE605F', '#AB4E68', '#7F4357', '#533745', '#A8948A', '#3B302B',
+'#9D9171', '#554B30', '#9E8234', '#998C69', '#4E4838', '#845440', '#845440', '#DB4F4F',
+'#4B1A1A', '#473527', '#552600','#A87E5D' ];
+
+
+    var c1 = Math.floor(Math.random() * color.length);
+    var cca = color[c1];
+    gsap.to('body', .7, { backgroundColor: cca});
+
+    var c2 = Math.floor(Math.random() * color.length);
+    var cca2 = color[c2];
+    gsap.to('.in', .7, { backgroundColor: cca2});
+
+    const boxAnimation4 = gsap.to('body', .7, { backgroundColor: cca});
+
+    ScrollTrigger.create({
+    	animation: boxAnimation4,
+      start: "bottom center",
+    	trigger: ".trigerPost"
+    });
+
+
   }
 }
+</script>
+<style>
+/* .oNas {
 
-  </style>
+  animation:bg 25s linear infinite;
+}
+@keyframes bg {
+  0% {background: #ff0075;}
+  3% {background: #0094ff;}
+  20% {background: #0094ff;}
+  23% {background: #b200ff;}
+  40% {background: #b200ff;}
+  43% {background: #8BC34A;}
+  60% {background: #8BC34A;}
+  63% {background: #F44336;}
+  80% {background: #F44336;}
+  83% {background: #F44336;}
+  100% {background: #F44336;}
+} */
+.h2hr {
+  text-align: center;
+}
+.powitanie a {
+  text-decoration: none;
+}
+  .post-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2vw;
+    flex: 1 1 1;
+  }
+  .in {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0; left: 0;
+    background-color: #202020;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    z-index: 122;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }
+  .ininMenu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%);
+    z-index: 122;
+  }
+
+
+  .header, .post, .powitanie {
+    clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%);
+    z-index: 7;
+  }
+
+   h1 {
+     margin: 10vh auto;
+   }
+   .oNas p, .oNas h3 {
+     /* From https://css.glass  */
+     background: rgba(255, 255, 255, .03);
+     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+     backdrop-filter: blur(4.5px);
+     -webkit-backdrop-filter: blur(4.5px);
+     border: 1px solid rgba(255, 255, 255, 0.32);
+     padding: 1rem;
+     max-width: 55rem;
+   }
+   @media screen and (orientation:portrait) {
+     .oNas p, .oNas h2 {
+       font-size: 1.2em;
+       padding: 1rem;
+     }
+     .powitanie {
+       font-size: 1.8em;
+       max-width: 98%;
+       padding: 1vw;
+     }
+     .tag-list2 li {
+       padding: 1rem;
+       margin:0;
+       border-radius: 50%;
+       width: 6rem;
+       height: 6rem;
+       text-align: center;
+       list-style: none;
+       font-size: 1.2rem;
+       transition: .3s;
+       box-shadow: 0 4px 30px rgba(255, 255, 255, 0.0);
+     }
+     .tag-list2 {
+       max-width: 90vw;
+     }
+    }
+   @media screen and (orientation:landscape) {
+     .powitanie {
+       font-size: 2.1em;
+       line-height: 1.6;
+       max-width: 42%;
+     }
+     .oNas {
+       display: flex;
+       max-width: 90vw;
+       gap: 2rem;
+     }
+     .tag-list2 li {
+       padding: 2rem;
+       margin:0;
+       border-radius: 50%;
+       width: 8rem;
+       height: 8rem;
+       text-align: center;
+       list-style: none;
+       font-size: 2rem;
+       transition: .3s;
+       box-shadow: 0 4px 30px rgba(255, 255, 255, 0.0);
+     }
+   }
+
+
+
+
+   .tag-list2 {
+
+     display: flex;
+     flex-shrink: 2;
+     flex-wrap: wrap;
+     min-height: 10vw;
+     margin-bottom: 20vw;
+     padding: 6vw;
+     gap: 1rem;
+       font-family: 'breamcatcher-regular', sans-serif;
+
+     /* From https://css.glass  */
+     background: rgba(255, 255, 255, .03);
+     backdrop-filter: blur(4.5px);
+     -webkit-backdrop-filter: blur(4.5px);
+     border: 1px solid rgba(255, 255, 255, 0.32);
+     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .tag-list2 li:hover {
+      box-shadow: 0 4px 30px rgba(255, 255, 255, 0.2);
+    }
+    .tag-list2 li a {
+      text-decoration: none;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      color: #fff!important;
+      font-size: 1.2em;
+
+    }
+
+         .tag-list2 li:nth-child(1) {
+    filter: brightness(85%);
+           background-color: #784C39;
+
+         }
+         .tag-list2 li:nth-child(1):hover {
+              background-color: #784234;
+              color: 202020;
+
+              box-shadow: 0 4px 30px rgba(255, 255, 255, 0.1);
+         }
+         .tag-list2 li:nth-child(2)  {
+
+                         background-color: #B07156;
+
+         }
+
+         .tag-list2 li:nth-child(2):hover {
+              background-color: #B07156;
+              transition: .3s;
+
+         }
+         .tag-list2 li:nth-child(3) {
+        background-color: #AE605F;
+         }
+         .tag-list2 li:nth-child(3):hover {
+              background-color: #AE605F;
+              transition: .3s;
+         }
+         .tag-list2 li:nth-child(4)  {
+
+           background-color: #AB4E68;
+         }
+         .tag-list2 li:nth-child(4):hover {
+              transition: .3s;
+         }
+         .tag-list2 li:nth-child(5)  {
+
+           background-color: #7F4357;
+         }
+         .tag-list2 li:nth-child(5):hover {
+              transition: .3s;
+         }
+         .tag-list2 li:nth-child(6) {
+
+           background-color: #533745;
+         }
+         .tag-list2 li:nth-child(6):hover {
+              transition: .3s;
+         }
+         .tag-list2 li:nth-child(7)  {
+
+           background-color: #A8948A;
+         }
+         .tag-list2 li:nth-child(7):hover {
+              transition: .3s;
+         }
+         .tag-list2 li:nth-child(8) {
+           background-color: #3B302B;
+         }
+         .tag-list2 li:nth-child(8):hover {
+              transition: .3s;
+         }
+         .tag-list2 li:nth-child(9) {
+           background-color: #9D9171;
+         }
+         .tag-list2 li:nth-child(9):hover {
+              transition: .3s;
+         }
+         .tag-list2 li:nth-child(10) {
+           background-color: #554B30;
+         }
+         .tag-list2 li:nth-child(10):hover {
+              transition: .3s;
+         }
+         .tag-list2 li:nth-child(11)  {
+           background-color: #9E8234;
+         }
+         .tag-list2 li:nth-child(11):hover {
+              transition: .3s;
+         }
+         .tag-list2 li:nth-child(12)  {
+           background-color: #998C69;
+         }
+         .tag-list2 li:nth-child(12):hover {
+              transition: .3s;
+         }
+         .tag-list2 li:nth-child(13) {
+           background-color: #4E4838;
+         }
+         .tag-list2 li:nth-child(13):hover {
+              transition: .3s;
+         }
+         .tag-list2 li:nth-child(14) {
+           background-color: #845440;
+         }
+         .tag-list2 li:nth-child(14):hover {
+              transition: .3s;
+         }
+         .tag-list2 li:nth-child(15) {
+           background-color: #845480;
+         }
+         .tag-list2 li:nth-child(15):hover {
+              transition: .3s;
+         }
+         .tag-list2 li:nth-child(16)  {
+           background-color: #DB4F4F;
+         }
+         .tag-list2 li:nth-child(16):hover {
+              transition: .3s;
+         }
+         .tag-list2 li:nth-child(17)  {
+           background-color: #4B1A1A;
+         }
+         .tag-list2 li:nth-child(17):hover {
+              transition: .3s;
+         }
+         .tag-list2 li:nth-child(18)  {
+           background-color: #473527;
+         }
+         .tag-list2 li:nth-child(18):hover {
+              transition: .3s;
+         }
+         .tag-list2 li:nth-child(19)  {
+           background-color: #552600;
+         }
+         .tag-list2 li:nth-child(19):hover {
+              transition: .3s;
+         }
+         .tag-list2 li:nth-child(20)  {
+           background-color: #A87E5D;
+         }
+         .tag-list2 li:nth-child(20):hover {
+              transition: .3s;
+         }
+
+
+</style>
