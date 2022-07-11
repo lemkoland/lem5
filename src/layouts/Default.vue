@@ -3,6 +3,8 @@
     <div class="wzorki"></div>
     <!-- <g-image class="menu-icon" v-if="menu" alt="menu" src="~/assets/menu.png"  @click="pokaMenu" /> -->
     <g-link to="/menu/"><g-image class="menu-icon" alt="menu" src="~/assets/menu.png" /></g-link>
+    <!-- <g-link to="/audio-player/"><g-image class="audio-icon" alt="menu" src="~/assets/play.svg" /></g-link> -->
+
 
     <header class="header">
       <div class="logosy">
@@ -12,58 +14,7 @@
 
 
     </header>
-    <nav class="nav" id="pokaMenu">
-      <g-image class="cancel-icon" alt="menu" src="~/assets/cancel.png"  @click="niePokaMenu" />
 
-      <div class="logosy">
-        <g-link to="/posty/"><g-image class="chow" alt="ptak chowanec naskicowany z konturem"
-          src="~/assets/chowanec_z-konturem.svg" width="180"/>
-</g-link>
-</div>
-
-<!-- <h2>Dowiedz się więcej:</h2>
-      <ul class="pages-list">
-        <li v-for="edge in $page.allWordPressPage.edges" :key="edge.node.id"  @click="niePokaMenu" >
-          <g-link :to="edge.node.path">
-            <p>{{edge.node.title}}</p>
-          </g-link>
-        </li>
-
-      </ul>
-      <h2>Lub wybierz jedną z kategorii</h2>
-      <ul class="cat-list">
-        <li v-for="edge in $page.allWordPressCategory.edges" :key="edge.node.id"  @click="niePokaMenu" >
-          <g-link :to="edge.node.path">
-            <p>{{edge.node.title}}</p>
-          </g-link>
-        </li>
-      </ul> -->
-<div class="navLinki">
-
-
-      <li @click="niePokaMenu"><g-link  to="/cat/nowyny/">Новины / Aktualności</g-link></li>
-      <li @click="niePokaMenu"><g-link  to="/o-nas/">О нас / O nas</g-link></li>
-      <li @click="niePokaMenu"><g-link  to="/wspolpraca/">Współpraca</g-link></li>
-      <li @click="niePokaMenu"><g-link  to="/klub-lemkoland/">Клюб Лемколянд / Klub Lemkoland </g-link></li>
-      <li @click="niePokaMenu"><g-link  to="/czasopismo/">Часопис / Czasopismo </g-link></li>
-      <li @click="niePokaMenu"><g-link  to="/cat/sklep/">Склеп / Sklep </g-link></li>
-      <li></li>
-      <li @click="niePokaMenu"><g-link to="/cat/besidujeme-po-naszomu/">Бесідуєме по нашому / Rozmawiamy po naszemu</g-link></li>
-      <li @click="niePokaMenu"><g-link to="/cat/hry-i-zabawy/">Гры і забавы / Gry i zabawy</g-link></li>
-      <li @click="niePokaMenu"><g-link to="/cat/malowanki/">Малюванкы / Malowanki</g-link></li>
-      <li @click="niePokaMenu"><g-link to="/cat/spiwanky-i-opowidania/">Сьпіванкы і оповіданя / Śpiewanki i opowiadania</g-link></li>
-      <li @click="niePokaMenu"><g-link to="/cat/rukotwory/">Рукотворы / Rękodzieło</g-link></li>
-      <li></li>
-      <li @click="niePokaMenu"><g-link to="/cat/dla-rodzicow-i-nauczycieli/">Для родичів і учытелів / Dla rodziców i nauczycieli</g-link></li>
-      <li @click="niePokaMenu"><g-link to="/cat/czytalnia/">Чытальня / Czytelnia</g-link></li>
-      <li></li>
-      <li @click="niePokaMenu"><g-link to="/kontakt/">Контакт / Kontakt</g-link></li>
-      <li></li>
-      <li @click="niePokaMenu"lo><g-link to="https://www.facebook.com/Lemkoland/">FB</g-link></li>
-      <li @click="niePokaMenu"lo><g-link to="https://www.youtube.com/user/lemkoland">YT</g-link></li>
-</div>
-
-    </nav>
     <slot/>
 
 <footer class="footer">
@@ -147,13 +98,6 @@ img {
   max-width: 100%;
 }
 
-nav[role="navigation"] {
-  text-align: center;
-}
-nav[role="navigation"] a {
-  display: inline-block;
-  margin: 1.0em 0.75em 2.0em;
-}
 
 
 .header {
@@ -162,9 +106,7 @@ nav[role="navigation"] a {
   margin-bottom: 20px;
   clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%);
 }
-.nav__link {
-  margin-left: 20px;
-}
+
 .post-list {
   list-style: none;
   padding-left: 0;
@@ -206,29 +148,7 @@ iframe {
   list-style: none;
 }
 
-.nav {
-  /* From https://css.glass  */
-  background: rgba(255, 255, 255, .93);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(4.5px);
-  -webkit-backdrop-filter: blur(4.5px);
-  border: 1px solid rgba(255, 255, 255, 0.32);
-  width: 98vw;
-  min-height: 98vh;
-  position: absolute;
 
-  top: 0;
-  left: 0;
-  z-index: 222;
-  padding: 1vw 1vh;
-  clip-path: polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  font-size: 0.8em;
-
-}
 .cat-list a, .pages-list a {
   color: #000;
 }
@@ -238,6 +158,15 @@ iframe {
   margin: 1rem;
   position: fixed;
   right: 1rem;
+  top: 1rem;
+  z-index: 23;
+}
+.audio-icon {
+  width: 70px!important;
+  height: 70px!important;
+  margin: 1rem;
+  position: fixed;
+  right: 7rem;
   top: 1rem;
   z-index: 23;
 }
