@@ -114,7 +114,7 @@ export default {
             var c2 = Math.floor(Math.random() * color.length);
             var cca2 = color[c2];
             gsap.to('.in', .7, { backgroundColor: cca2});
-
+  //
   //   var sections = gsap.utils.toArray('.trigerPost');
   //
   //   sections.forEach((section) => {
@@ -136,9 +136,9 @@ export default {
   //         scrub: true
   //       }
   //   });
-
-
-    })
+  //
+  //
+  //   })
 
   }
 }
